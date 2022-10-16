@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CTCF</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.6</span>
       </span>
     </div>
 
@@ -81,6 +81,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div class="section level1">
 <div class="page-header"><h1 id="ctcf">CTCF<a class="anchor" aria-label="anchor" href="#ctcf"></a>
 </h1></div>
@@ -89,7 +90,7 @@
 <p>TL;DR - for human hg38 genome assembly, use <code>hg38.MA0139.1.RData</code> (“AH104729”). For mouse mm10 genome assembly, use <code>mm10.MA0139.1.RData</code> (“AH104755”). For <a href="https://screen.encodeproject.org/" class="external-link">ENCODE SCREEN</a> data, use <code>hg38.SCREEN.GRCh38_CTCF.RData</code> (“AH104730”) or <code>mm10.SCREEN.mm10_CTCF.RData</code> (“AH104756”) objects.</p>
 <p>The CTCF GRanges are named as <code>&lt;assembly&gt;.&lt;Database&gt;</code>. The FIMO-predicted data includes extra columns with motif name, score, p-value, q-value, and the motif sequence.</p>
 <p><strong>Please, note that the updated CTCF objects will be available in Bioconductor/AnnotationHub 3.16.</strong> To test the following code, use the <code>bioconductor::devel</code> Docker image. Run:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">docker</span> run -e PASSWORD=password -p 8787:8787 -d --rm -v <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/home/rstudio bioconductor/bioconductor_docker:devel</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-e</span> PASSWORD=password <span class="at">-p</span> 8787:8787 <span class="at">-d</span> <span class="at">--rm</span> <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/home/rstudio bioconductor/bioconductor_docker:devel</span></code></pre></div>
 <p>Open <a href="http://localhost:8787" class="external-link uri">http://localhost:8787</a> and login using <code>rstudio/password</code> credentials.</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
@@ -99,10 +100,36 @@
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"AnnotationHub"</span><span class="op">)</span> </span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"AnnotationHub"</span>, update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
+<span><span class="co">#&gt; '?repositories' for details</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; replacement repositories:</span></span>
+<span><span class="co">#&gt;     CRAN: https://packagemanager.rstudio.com/cran/__linux__/focal/2022-06-22</span></span>
+<span><span class="co">#&gt; Bioconductor version 3.16 (BiocManager 1.30.18), R 4.2.0 (2022-04-22)</span></span>
+<span><span class="co">#&gt; Warning: package(s) not installed when version(s) same as current; use `force = TRUE` to</span></span>
+<span><span class="co">#&gt;   re-install: 'AnnotationHub'</span></span>
 <span><span class="co"># Additional packages</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"GenomicRanges"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plyranges"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"GenomicRanges"</span>, update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
+<span><span class="co">#&gt; '?repositories' for details</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; replacement repositories:</span></span>
+<span><span class="co">#&gt;     CRAN: https://packagemanager.rstudio.com/cran/__linux__/focal/2022-06-22</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Bioconductor version 3.16 (BiocManager 1.30.18), R 4.2.0 (2022-04-22)</span></span>
+<span><span class="co">#&gt; Warning: package(s) not installed when version(s) same as current; use `force = TRUE` to</span></span>
+<span><span class="co">#&gt;   re-install: 'GenomicRanges'</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plyranges"</span>, update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
+<span><span class="co">#&gt; '?repositories' for details</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; replacement repositories:</span></span>
+<span><span class="co">#&gt;     CRAN: https://packagemanager.rstudio.com/cran/__linux__/focal/2022-06-22</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Bioconductor version 3.16 (BiocManager 1.30.18), R 4.2.0 (2022-04-22)</span></span>
+<span><span class="co">#&gt; Warning: package(s) not installed when version(s) same as current; use `force = TRUE` to</span></span>
+<span><span class="co">#&gt;   re-install: 'plyranges'</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -202,296 +229,947 @@
 <span><span class="co">#&gt;   [3093041]   8.63415  6.96e-05     0.595 CTGCATTTGCGTTCCGACGC..</span></span>
 <span><span class="co">#&gt;   -------</span></span>
 <span><span class="co">#&gt;   seqinfo: 24 sequences from hg38 genome</span></span></code></pre></div>
-<!--
-The `hg38.MA0139.1` object contains CTCF sites detected using the most
-popular [MA0139.1](https://jaspar.genereg.net/matrix/MA0139.1/) CTCF PWM. 
-To retrieve:
-
-
-```r
-# hg38.MA0139.1
-CTCF_hg38 <- query_data[["AH104729"]]
-#> loading from cache
-CTCF_hg38
-#> GRanges object with 887980 ranges and 5 metadata columns:
-#>            seqnames            ranges strand |        name     score    pvalue
-#>               <Rle>         <IRanges>  <Rle> | <character> <numeric> <numeric>
-#>        [1]     chr1       11414-11432      + |    MA0139.1   9.11475  5.65e-05
-#>        [2]     chr1       14316-14334      + |    MA0139.1   7.83607  9.71e-05
-#>        [3]     chr1       15439-15457      + |    MA0139.1   8.00000  9.08e-05
-#>        [4]     chr1       16603-16621      + |    MA0139.1   8.04918  8.89e-05
-#>        [5]     chr1       16651-16669      + |    MA0139.1  11.42620  1.97e-05
-#>        ...      ...               ...    ... .         ...       ...       ...
-#>   [887976]     chrY 57209918-57209936      - |    MA0139.1  11.42620  1.97e-05
-#>   [887977]     chrY 57209966-57209984      - |    MA0139.1   8.04918  8.89e-05
-#>   [887978]     chrY 57211133-57211151      - |    MA0139.1   8.00000  9.08e-05
-#>   [887979]     chrY 57212256-57212274      - |    MA0139.1   7.83607  9.71e-05
-#>   [887980]     chrY 57215146-57215164      - |    MA0139.1   9.11475  5.65e-05
-#>               qvalue            sequence
-#>            <numeric>         <character>
-#>        [1]     0.555 ctggcagctggggacactg
-#>        [2]     0.601 GGACCAACAGGGGCAGGAG
-#>        [3]     0.599 TAGCCTCCAGAGGCCTCAG
-#>        [4]     0.597 CCACCTGAAGGAGACGCGC
-#>        [5]     0.504 TGGCCTACAGGGGCCGCGG
-#>        ...       ...                 ...
-#>   [887976]     0.648 TGGCCTACAGGGGCCGCGG
-#>   [887977]     0.770 CCACCTGAAGGAGACGCGC
-#>   [887978]     0.770 TAGCCTCCAGAGGCCTCAG
-#>   [887979]     0.770 GGACCAACAGGGGCAGGAG
-#>   [887980]     0.726 CTGGCAGCTGGGGACACTG
-#>   -------
-#>   seqinfo: 24 sequences from hg38 genome
-```
-
-It is always advisable to sort GRanges objects and keep standard chromsomes:
-
-
-```r
-suppressMessages(library(plyranges))
-CTCF_hg38_all <- CTCF_hg38_all %>% keepStandardChromosomes() %>% sort()
-CTCF_hg38 <- CTCF_hg38 %>% keepStandardChromosomes() %>% sort()
-```
-
-Note that the [FIMO](https://meme-suite.org/meme/doc/fimo.html) tool detects 
-CTCF binding sites using the 1e-4 p-value threshold by default (the more significant
-p-value corresponds to the more confidently detected CTCF motif). We found that
-this threshold may be too permissive. Using the 
-[ENCODE SCREEN](https://screen.encodeproject.org/) database as ground truth,
-we found 1e-6 as the optimal threshold providing approximately 80% true positive
-rate. However, less significant CTCF motifs may be cell type-specific or have 
-weaker CTCF binding and therefore be missed by conventional peak callers.
-If cell type-specific CTCF binding is of interest, we recommend exploring
-less significant CTCF sites.
-
-<img src="man/figures/Figure_human_pvalues_threshold.png" width="100%" />
-
-To filter the GRanges object and keep high-confidence CTCF sites, use:
-
-
-```r
-# Check length before filtering
-print(paste("Number of CTCF motifs at the default 1e-4 threshold:", length(CTCF_hg38)))
-#> [1] "Number of CTCF motifs at the default 1e-4 threshold: 887980"
-# Filter and check length after filtering
-CTCF_hg38_filtered <- CTCF_hg38 %>% plyranges::filter(pvalue < 1e-6)
-print(paste("Number of CTCF motifs at the 1e-6 threshold:", length(CTCF_hg38_filtered)))
-#> [1] "Number of CTCF motifs at the 1e-6 threshold: 21671"
-# Similarly, filter
-CTCF_hg38_all_filtered <- CTCF_hg38_all %>% plyranges::filter(pvalue < 1e-6)
-```
-
-Given some databases provide multiple CTCF PWMs, one CTCF site may be detected 
-multiple times resulting in overlapping CTCF sites. For example, the proportion
-of overlapping CTCF sites in the `CTCF_hg38_all_filtered` object containing CTCF
-sites detected by three matrices nearly 40%:
-
-
-```r
-# Proportion of overlapping enrtries
-tmp <- findOverlaps(CTCF_hg38_all, CTCF_hg38_all)
-prop_overlap <- sort(table(queryHits(tmp)) %>% table(), decreasing = TRUE)
-sum(prop_overlap[which(names(prop_overlap) != "1")]) / length(CTCF_hg38_all)
-#> [1] 0.375093
-```
-
-The proportion of overlapping CTCF sites in the `CTCF_hg38_filtered` object
-containing CTCF sites detected by the [MA0139.1](https://jaspar.genereg.net/matrix/MA0139.1/) 
-matrix is less than 2.5%
-
-
-```r
-tmp <- findOverlaps(CTCF_hg38, CTCF_hg38)
-prop_overlap <- sort(table(queryHits(tmp)) %>% table(), decreasing = TRUE)
-sum(prop_overlap[which(names(prop_overlap) != "1")]) / length(CTCF_hg38)
-#> [1] 0.0233485
-```
-
-Reducing them (merging overlapping CTCF sites), combined with 1E-6 cutoff 
-filtering, yields the number of CTCF sites comparable to previously reported.
-
-
-```r
-print(paste("Number of CTCF_hg38 motifs at the 1e-6 threshold AND reduced:", length(CTCF_hg38_filtered %>% reduce())))
-#> [1] "Number of CTCF_hg38 motifs at the 1e-6 threshold AND reduced: 21652"
-print(paste("Number of CTCF_hg38_all motifs at the 1e-6 threshold AND reduced:", length(CTCF_hg38_all_filtered %>% reduce())))
-#> [1] "Number of CTCF_hg38_all motifs at the 1e-6 threshold AND reduced: 63572"
-```
-
-However, regulatory elements with CTCF proteins co-occupying adjacent/overlapping 
-CTCF binding motifs were shown to be functionally and structurally different from 
-those with single CTCF motifs. We provide non-reduced CTCF data and advise 
-considering overlap of CTCF sites depending on the study's goal. 
-
-# liftOver of CTCF coordinates
-
-As genome assemblies for model organisms continue to improve, CTCF sites for 
-previous genome assemblies become obsolete. Typically, the actual genome 
-sequence changes little, leading to changes in genomic coordinates.
-The [liftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver)
-method allows for conversion of genomic coordinates between genome assemblies.
-
-Some carefully curated CTCF sites are available only for older genome assemblies.
-Examples include the data from [CTCFBSDB](https://insulatordb.uthsc.edu/),
-available for hg18 and mm8 genome assemblies.
-
-To investigate whether liftOver of CTCF sites from older genome assemblies is
-a viable option, we tested for overlap between CTCF sites directly detected in
-specific genome assemblies with those lifted over. We detected CTCF sites using
-the [MA0139.1](https://jaspar.genereg.net/matrix/MA0139.1/) PWM from JASPAR 2022 
-database in hg18, hg19, hg38, and T2T genome assemblies and converted their 
-genomic coordinates using the corresponding liftOver chains 
-([download_liftOver.sh](https://github.com/dozmorovlab/CTCF.dev/blob/main/scripts/download_liftOver.sh) 
-and [convert_liftOver.sh](https://github.com/dozmorovlab/CTCF.dev/blob/main/scripts/convert_liftOver.sh)
-scripts). We observed high Jaccard overlap among CTCF sites detected in the 
-original genome assemblies or lifted over. 
-
-**Jaccard overlaps among CTCF binding sites detected in the original and liftOver human genome assemblies.** CTCF sites were detected using JASPAR 2022 MA0139.1 PWM. The correlogram was clustered using Euclidean distance and Ward.D clustering . White-red gradient indicate low-to-high Jaccard overlaps. Jaccard values are shown in the corresponding cells.
-
-<img src="man/figures/Figure_liftOverJaccard.png" width="100%" />
-
-Our results suggest that liftOver is a viable alternative to obtain CTCF genomic
-annotations for different genome assemblies. We provide 
-[CTCFBSDB](https://insulatordb.uthsc.edu/) data converted to hg19 and hg38 
-genome assemblies.
-
-# CTCF Position Weight Matrices
-
-**CTCF PWM information.** "Motif" - individual motif IDs or the total number of motifs per database; "Length" - motif length of the range of lengths; "URL" - direct links to motif pages. Jaspar, Hocomoco, Jolma 2013 PWMs were downloaded from the [MEME database](https://meme-suite.org/meme/doc/download.html).
-
-
-|Motif                                                |Length..bp. |URL                                                                               |
-|:----------------------------------------------------|:-----------|:---------------------------------------------------------------------------------|
-|Jaspar2022                                           |            |                                                                                  |
-|MA0139.1                                             |19          |https://jaspar2022.genereg.net/matrix/MA0139.1                                    |
-|MA1929.1                                             |34          |http://jaspar2022.genereg.net/matrix/MA1929.1                                     |
-|MA1930.1                                             |35          |http://jaspar2022.genereg.net/matrix/MA1930.1                                     |
-|HOCOMOCO v11                                         |            |                                                                                  |
-|CTCF_HUMAN.H11MO.0.A                                 |19          |http://hocomoco.autosome.ru/motif/CTCF_HUMAN.H11MO.0.A                            |
-|CTCF_MOUSE.H11MO.0.A                                 |20          |http://hocomoco.autosome.ru/motif/CTCF_MOUSE.H11MO.0.A                            |
-|SwissRegulon                                         |            |                                                                                  |
-|CTCF.p2                                              |20          |https://swissregulon.unibas.ch/wm/?wm=CTCF.p2&org=hg18                            |
-|Jolma 2013                                           |            |                                                                                  |
-|CTCF_full                                            |17          |http://floresta.eead.csic.es/footprintdb/index.php?db=HumanTF:1.0&motif=CTCF_full |
-|CTCFBSDB                                             |            |                                                                                  |
-|EMBL_M1, EMBL_M2, MIT_LM2, MIT_LM7, MIT_LM23, REN_20 |9-20        |https://insulatordb.uthsc.edu/download/CTCFBSDB_PWM.mat                           |
-|CIS-BP                                               |            |                                                                                  |
-|83 CTCF (Homo sapiens) C2H2 ZF                       |11-21       |http://cisbp.ccbr.utoronto.ca/TFreport.php?searchTF=T094831_2.00                  |
-|2 Ctcf (Mus musculus) C2H2 ZF                        |15, 20      |http://cisbp.ccbr.utoronto.ca/TFreport.php?searchTF=T100985_2.00                  |
-
-**CTCF motif logos.** PWMs from (A) MEME, (B) CTCFBSDB, (C) CIS-BP human, and (D) CIS-BP mouse databases. Clustering and alignment of motifs was performed using the `r `BiocStyle::Biocpkg("motifStack")` R package.
-
-<img src="man/figures/Supplementary_Figure_1.png" width="100%" />
-
-See [inst/scripts/make-data.R](inst/scripts/make-data.R) how the CTCF GRanges 
-objects were created.
-
-# CTCF predicted and experimental data
-
-**Predefined CTCF binding data.** "Database" - source of data; "Number" - number of binding sites; "Assembly" - genome assembly; "URL" - direct link to data download.
-
-
-|Database                           | Number|Assembly |URL                                                                 |
-|:----------------------------------|------:|:--------|:-------------------------------------------------------------------|
-|CTCFBSDB 2.0                       |     NA|         |                                                                    |
-|Predicted human CTCF binding sites |  13401|hg18     |https://insulatordb.uthsc.edu/download/allcomp.txt.gz               |
-|Predicted mouse CTCF binding sites |   5504|mm8      |https://insulatordb.uthsc.edu/download/allcomp.txt.gz               |
-|SCREEN ENCODE                      |     NA|         |                                                                    |
-|Human CTCF-bound cCREs             | 450641|hg38     |https://api.wenglab.org/screen_v13/fdownloads/cCREs/GRCh38-CTCF.bed |
-|Mouse CTCF-bound cCREs             |  82777|mm10     |https://api.wenglab.org/screen_v13/fdownloads/cCREs/mm10-CTCF.bed   |
-
-# All GRanges objects included in the package
-
-**Summary of CTCF binding data provided in the package.** CTCF sites for each genome assembly and PWM combination were detected using FIMO. "ID" - object names formatted as `<assembly>.<database name>`; "Assembly" - genome assembly, T2T - telomere to telomere (GCA_009914755.4) genome assembly; "All (p-value threshold Xe-Y)" - the total number of CTCF binding sites in the corresponding BED file at the Xe-Y threshold; "Non-overlapping (p-value threshold Xe-Y)" - number of non-overlapping CTCF binding sites (overlapping regions are merged) at the Xe-Y threshold.
-
-
-|ID                                                      |Description                                                                                       |Genome |Species      | Taxonomy|Data.provider    |All..p.value.threshold.1e.4. |Non.overlapping..p.value.threshold.1e.4. |All..p.value.threshold.1e.6. |Non.overlapping..p.value.threshold.1e.6. |
-|:-------------------------------------------------------|:-------------------------------------------------------------------------------------------------|:------|:------------|--------:|:----------------|:----------------------------|:----------------------------------------|:----------------------------|:----------------------------------------|
-|T2T.CIS_BP_2.00_Homo_sapiens.RData                      |T2T CTCF motifs detected using human PWM matrices from http://cisbp.ccbr.utoronto.ca/, by FIMO    |T2T    |Homo sapiens |     9606|CIS-BP           |85,004,288                   |11,610,275                               |1,642,859                    |308,511                                  |
-|T2T.CTCFBSDB_PWM.RData                                  |T2T CTCF motifs detected using PWM matrices from https://insulatordb.uthsc.edu/, by FIMO          |T2T    |Homo sapiens |     9606|CTCFBSDB 2.0     |5,385,530                    |3,452,150                                |98,088                       |61,030                                   |
-|T2T.HOCOMOCOv11_core_HUMAN_mono_meme_format.RData       |T2T CTCF motifs detected using human PWM matrices from https://hocomoco11.autosome.org/, by FIMO  |T2T    |Homo sapiens |     9606|HOCOMOCO v11     |927,477                      |909,247                                  |21,491                       |21,450                                   |
-|T2T.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData  |T2T CTCF motifs detected using human PWM matrices from https://jaspar.genereg.net/, by FIMO       |T2T    |Homo sapiens |     9606|JASPAR 2022      |3,196,774                    |2,538,458                                |75,126                       |64,767                                   |
-|T2T.Jolma2013.RData                                     |T2T CTCF motifs detected using PWM matrices from DOI:10.1016/j.cell.2012.12.009, by FIMO          |T2T    |Homo sapiens |     9606|Jolma 2013       |342,765                      |341,669                                  |6,857                        |6,857                                    |
-|T2T.MA0139.1.RData                                      |T2T CTCF motifs detected using MA0139.1 PWM matrix from https://jaspar.genereg.net/, by FIMO      |T2T    |Homo sapiens |     9606|JASPAR 2022      |916,829                      |905,231                                  |22,149                       |22,131                                   |
-|T2T.SwissRegulon_human_and_mouse.RData                  |T2T CTCF motifs detected using PWM matrices from https://swissregulon.unibas.ch/sr/, by FIMO      |T2T    |Homo sapiens |     9606|SwissRegulon     |1,106,234                    |1,094,142                                |23,050                       |23,006                                   |
-|hg38.CIS_BP_2.00_Homo_sapiens.RData                     |hg38 CTCF motifs detected using human PWM matrices from http://cisbp.ccbr.utoronto.ca/, by FIMO   |hg38   |Homo sapiens |     9606|CIS-BP           |82,804,664                   |11,502,445                               |1,612,042                    |303,446                                  |
-|hg38.CTCFBSDB.CTCF_predicted_human.RData                |hg38 CTCF predicted motifs from https://insulatordb.uthsc.edu/                                    |hg38   |Homo sapiens |     9606|CTCFBSDB 2.0     |5,212,674                    |3,343,301                                |97,491                       |60,648                                   |
-|hg38.CTCFBSDB_PWM.RData                                 |hg38 CTCF motifs detected using PWM matrices from https://insulatordb.uthsc.edu/, by FIMO         |hg38   |Homo sapiens |     9606|CTCFBSDB 2.0     |13,357                       |13,278                                   |-                            |-                                        |
-|hg38.HOCOMOCOv11_core_HUMAN_mono_meme_format.RData      |hg38 CTCF motifs detected using human PWM matrices from https://hocomoco11.autosome.org/, by FIMO |hg38   |Homo sapiens |     9606|HOCOMOCO v11     |891,816                      |875,038                                  |21,020                       |20,975                                   |
-|hg38.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData |hg38 CTCF motifs detected using human PWM matrices from https://jaspar.genereg.net/, by FIMO      |hg38   |Homo sapiens |     9606|JASPAR 2022      |3,093,041                    |2,456,234                                |73,545                       |63,572                                   |
-|hg38.Jolma2013.RData                                    |hg38 CTCF motifs detected using PWM matrices from DOI:10.1016/j.cell.2012.12.009, by FIMO         |hg38   |Homo sapiens |     9606|Jolma 2013       |330,892                      |329,834                                  |6,823                        |6,823                                    |
-|hg38.MA0139.1.RData                                     |hg38 CTCF motifs detected using MA0139.1 PWM matrix from https://jaspar.genereg.net/, by FIMO     |hg38   |Homo sapiens |     9606|JASPAR 2022      |887,980                      |876,938                                  |21,671                       |21,652                                   |
-|hg38.SCREEN.GRCh38_CTCF.RData                           |hg38 CTCF-bound human cis-regulatory elements from https://screen.encodeproject.org/              |hg38   |Homo sapiens |     9606|ENCODE SCREEN v3 |450,641                      |444,379                                  |-                            |-                                        |
-|hg38.SwissRegulon_human_and_mouse.RData                 |hg38 CTCF motifs detected using PWM matrices from https://swissregulon.unibas.ch/sr/, by FIMO     |hg38   |Homo sapiens |     9606|SwissRegulon     |1,079,055                    |1,067,050                                |22,569                       |22,521                                   |
-|hg19.CIS_BP_2.00_Homo_sapiens.RData                     |hg19 CTCF motifs detected using human PWM matrices from http://cisbp.ccbr.utoronto.ca/, by FIMO   |hg19   |Homo sapiens |     9606|CIS-BP           |81,569,702                   |11,355,221                               |1,595,787                    |298,489                                  |
-|hg19.CTCFBSDB.CTCF_predicted_human.RData                |hg19 CTCF motifs detected using PWM matrices from https://insulatordb.uthsc.edu/, by FIMO         |hg19   |Homo sapiens |     9606|CTCFBSDB 2.0     |5,118,501                    |3,294,516                                |93,692                       |57,137                                   |
-|hg19.CTCFBSDB_PWM.RData                                 |hg19 CTCF predicted motifs from https://insulatordb.uthsc.edu/                                    |hg19   |Homo sapiens |     9606|CTCFBSDB 2.0     |13,355                       |13,294                                   |-                            |-                                        |
-|hg19.HOCOMOCOv11_core_HUMAN_mono_meme_format.RData      |hg19 CTCF motifs detected using human PWM matrices from https://hocomoco11.autosome.org/, by FIMO |hg19   |Homo sapiens |     9606|HOCOMOCO v11     |876,822                      |860,212                                  |20,853                       |20,811                                   |
-|hg19.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData |hg19 CTCF motifs detected using human PWM matrices from https://jaspar.genereg.net/, by FIMO      |hg19   |Homo sapiens |     9606|JASPAR 2022      |3,035,951                    |2,414,604                                |71,825                       |61,940                                   |
-|hg19.Jolma2013.RData                                    |hg19 CTCF motifs detected using PWM matrices from DOI:10.1016/j.cell.2012.12.009, by FIMO         |hg19   |Homo sapiens |     9606|Jolma 2013       |315,914                      |314,858                                  |6,734                        |6,734                                    |
-|hg19.MA0139.1.RData                                     |hg19 CTCF motifs detected using MA0139.1 PWM matrix from https://jaspar.genereg.net/, by FIMO     |hg19   |Homo sapiens |     9606|JASPAR 2022      |871,136                      |860,252                                  |21,511                       |21,491                                   |
-|hg19.SwissRegulon_human_and_mouse.RData                 |hg19 CTCF motifs detected using PWM matrices from https://swissregulon.unibas.ch/sr/, by FIMO     |hg19   |Homo sapiens |     9606|SwissRegulon     |1,061,972                    |1,050,085                                |22,325                       |22,282                                   |
-|hg18.CTCFBSDB.CTCF_predicted_human.RData                |hg18 CTCF predicted motifs from https://insulatordb.uthsc.edu/                                    |hg18   |Homo sapiens |     9606|CTCFBSDB 2.0     |13,401                       |13,343                                   |-                            |-                                        |
-|hg18.MA0139.1.RData                                     |hg18 CTCF motifs detected using MA0139.1 PWM matrix from https://jaspar.genereg.net/, by FIMO     |hg18   |Homo sapiens |     9606|JASPAR 2022      |869,463                      |858,603                                  |21,436                       |21,416                                   |
-|mm39.CIS_BP_2.00_Mus_musculus.RData                     |mm39 CTCF motifs detected using mouse PWM matrices from http://cisbp.ccbr.utoronto.ca/, by FIMO   |mm39   |Mus musculus |    10090|CIS-BP           |1,811,582                    |1,308,209                                |101,066                      |80,637                                   |
-|mm39.CTCFBSDB_PWM.RData                                 |mm39 CTCF predicted motifs from https://insulatordb.uthsc.edu/                                    |mm39   |Mus musculus |    10090|CTCFBSDB 2.0     |5,476,211                    |3,237,788                                |164,967                      |104,883                                  |
-|mm39.HOCOMOCOv11_core_MOUSE_mono_meme_format.RData      |mm39 CTCF motifs detected using mouse PWM matrices from https://hocomoco11.autosome.org/, by FIMO |mm39   |Mus musculus |    10090|HOCOMOCO v11     |740,710                      |726,641                                  |27,620                       |27,582                                   |
-|mm39.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData |mm39 CTCF motifs detected using mouse PWM matrices from https://jaspar.genereg.net/, by FIMO      |mm39   |Mus musculus |    10090|JASPAR 2022      |2,940,147                    |2,280,509                                |109,427                      |90,585                                   |
-|mm39.Jolma2013.RData                                    |mm39 CTCF motifs detected using PWM matrices from DOI:10.1016/j.cell.2012.12.009, by FIMO         |mm39   |Mus musculus |    10090|Jolma 2013       |423,521                      |422,552                                  |12,800                       |12,797                                   |
-|mm39.MA0139.1.RData                                     |mm39 CTCF motifs detected using MA0139.1 PWM matrix from https://jaspar.genereg.net/, by FIMO     |mm39   |Mus musculus |    10090|JASPAR 2022      |962,332                      |949,270                                  |32,210                       |32,199                                   |
-|mm39.SwissRegulon_human_and_mouse.RData                 |mm39 CTCF motifs detected using PWM matrices from https://swissregulon.unibas.ch/sr/, by FIMO     |mm39   |Mus musculus |    10090|SwissRegulon     |1,094,643                    |1,080,229                                |40,549                       |40,523                                   |
-|mm10.CIS_BP_2.00_Mus_musculus.RData                     |mm10 CTCF motifs detected using mouse PWM matrices from http://cisbp.ccbr.utoronto.ca/, by FIMO   |mm10   |Mus musculus |    10090|CIS-BP           |1,810,213                    |1,307,193                                |101,011                      |80,592                                   |
-|mm10.CTCFBSDB.CTCF_predicted_mouse.RData                |mm10 CTCF motifs detected using PWM matrices from https://insulatordb.uthsc.edu/, by FIMO         |mm10   |Mus musculus |    10090|CTCFBSDB 2.0     |5,472,184                    |3,235,312                                |164,855                      |104,827                                  |
-|mm10.CTCFBSDB_PWM.RData                                 |mm10 CTCF predicted motifs from https://insulatordb.uthsc.edu/                                    |mm10   |Mus musculus |    10090|CTCFBSDB 2.0     |5,502                        |5,491                                    |-                            |-                                        |
-|mm10.HOCOMOCOv11_core_MOUSE_mono_meme_format.RData      |mm10 CTCF motifs detected using mouse PWM matrices from https://hocomoco11.autosome.org/, by FIMO |mm10   |Mus musculus |    10090|HOCOMOCO v11     |740,100                      |726,052                                  |27,604                       |27,566                                   |
-|mm10.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData |mm10 CTCF motifs detected using mouse PWM matrices from https://jaspar.genereg.net/, by FIMO      |mm10   |Mus musculus |    10090|JASPAR 2022      |2,938,085                    |2,278,849                                |109,363                      |90,532                                   |
-|mm10.Jolma2013.RData                                    |mm10 CTCF motifs detected using PWM matrices from DOI:10.1016/j.cell.2012.12.009, by FIMO         |mm10   |Mus musculus |    10090|Jolma 2013       |423,194                      |422,225                                  |12,789                       |12,786                                   |
-|mm10.MA0139.1.RData                                     |mm10 CTCF motifs detected using MA0139.1 PWM matrix from https://jaspar.genereg.net/, by FIMO     |mm10   |Mus musculus |    10090|JASPAR 2022      |961,635                      |948,581                                  |32,188                       |32,177                                   |
-|mm10.SCREEN.mm10_CTCF.RData                             |mm10 CTCF-bound mouse cis-regulatory elements from https://screen.encodeproject.org/              |mm10   |Mus musculus |    10090|ENCODE SCREEN v3 |82,777                       |82,100                                   |-                            |-                                        |
-|mm10.SwissRegulon_human_and_mouse.RData                 |mm10 CTCF motifs detected using PWM matrices from https://swissregulon.unibas.ch/sr/, by FIMO     |mm10   |Mus musculus |    10090|SwissRegulon     |1,093,870                    |1,079,467                                |40,525                       |40,499                                   |
-|mm9.CIS_BP_2.00_Mus_musculus.RData                      |mm9 CTCF motifs detected using mouse PWM matrices from http://cisbp.ccbr.utoronto.ca/, by FIMO    |mm9    |Mus musculus |    10090|CIS-BP           |1,770,520                    |1,278,081                                |99,197                       |79,218                                   |
-|mm9.CTCFBSDB.CTCF_predicted_mouse.RData                 |mm9 CTCF motifs detected using PWM matrices from https://insulatordb.uthsc.edu/, by FIMO          |mm9    |Mus musculus |    10090|CTCFBSDB 2.0     |5,335,475                    |3,150,407                                |161,014                      |102,880                                  |
-|mm9.CTCFBSDB_PWM.RData                                  |mm9 CTCF predicted motifs from https://insulatordb.uthsc.edu/                                     |mm9    |Mus musculus |    10090|CTCFBSDB 2.0     |5,502                        |5,491                                    |-                            |-                                        |
-|mm9.HOCOMOCOv11_core_MOUSE_mono_meme_format.RData       |mm9 CTCF motifs detected using mouse PWM matrices from https://hocomoco11.autosome.org/, by FIMO  |mm9    |Mus musculus |    10090|HOCOMOCO v11     |725,199                      |711,236                                  |27,103                       |27,065                                   |
-|mm9.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData  |mm9 CTCF motifs detected using mouse PWM matrices from https://jaspar.genereg.net/, by FIMO       |mm9    |Mus musculus |    10090|JASPAR 2022      |2,879,784                    |2,230,170                                |107,506                      |89,172                                   |
-|mm9.Jolma2013.RData                                     |mm9 CTCF motifs detected using PWM matrices from DOI:10.1016/j.cell.2012.12.009, by FIMO          |mm9    |Mus musculus |    10090|Jolma 2013       |411,345                      |410,398                                  |12,309                       |12,306                                   |
-|mm9.MA0139.1.RData                                      |mm9 CTCF motifs detected using MA0139.1 PWM matrix from https://jaspar.genereg.net/, by FIMO      |mm9    |Mus musculus |    10090|JASPAR 2022      |938,919                      |925,939                                  |31,446                       |31,435                                   |
-|mm9.SwissRegulon_human_and_mouse.RData                  |mm9 CTCF motifs detected using PWM matrices from https://swissregulon.unibas.ch/sr/, by FIMO      |mm9    |Mus musculus |    10090|SwissRegulon     |1,066,676                    |1,052,374                                |39,510                       |39,484                                   |
-|mm8.CTCFBSDB.CTCF_predicted_mouse.RData                 |mm8 CTCF predicted motifs from https://insulatordb.uthsc.edu/                                     |mm8    |Mus musculus |    10090|CTCFBSDB 2.0     |5,504                        |5,493                                    |-                            |-                                        |
-
-
-## Citation
-
-Below is the citation output from using `citation('CTCF')` in R. Please
-run this yourself to check for any updates on how to cite __CTCF__.
-
-
-```r
-print(citation("CTCF"), bibtex = TRUE)
-```
-
-Please note that the *[BiocCheck](https://bioconductor.org/packages/3.16/BiocCheck)* was only made possible thanks to many other R and 
-bioinformatics software authors, which are cited either in the vignettes and/or 
-the paper(s) describing this package.
-
-## Development tools
-
-* Continuous code testing is possible thanks to [GitHub actions](https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/)  through *[usethis](https://CRAN.R-project.org/package=usethis)*, *[remotes](https://CRAN.R-project.org/package=remotes)*, and *[rcmdcheck](https://CRAN.R-project.org/package=rcmdcheck)* customized to use [Bioconductor's docker containers](https://www.bioconductor.org/help/docker/) and *[BiocCheck](https://bioconductor.org/packages/3.16/BiocCheck)*.
-* Code coverage assessment is possible thanks to [codecov](https://codecov.io/gh) and *[covr](https://CRAN.R-project.org/package=covr)*.
-* The [documentation website](http://mdozmorov.github.io/CTCF) is automatically updated thanks to *[pkgdown](https://CRAN.R-project.org/package=pkgdown)*.
-* The code is styled automatically thanks to *[styler](https://CRAN.R-project.org/package=styler)*.
-* The documentation is formatted thanks to *[devtools](https://CRAN.R-project.org/package=devtools)* and *[roxygen2](https://CRAN.R-project.org/package=roxygen2)*.
-
-For more details, check the `dev` directory.
-
-This package was developed using *[biocthis](https://bioconductor.org/packages/3.16/biocthis)*.
-
-## Code of Conduct
-
-Please note that the CTCF project is released with a [Contributor Code of Conduct](http://bioconductor.org/about/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
--->
+<p>The <code>hg38.MA0139.1</code> object contains CTCF sites detected using the most popular <a href="https://jaspar.genereg.net/matrix/MA0139.1/" class="external-link">MA0139.1</a> CTCF PWM. To retrieve:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># hg38.MA0139.1</span></span>
+<span><span class="va">CTCF_hg38</span> <span class="op">&lt;-</span> <span class="va">query_data</span><span class="op">[[</span><span class="st">"AH104729"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; loading from cache</span></span>
+<span><span class="va">CTCF_hg38</span></span>
+<span><span class="co">#&gt; GRanges object with 887980 ranges and 5 metadata columns:</span></span>
+<span><span class="co">#&gt;            seqnames            ranges strand |        name     score    pvalue</span></span>
+<span><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt;        [1]     chr1       11414-11432      + |    MA0139.1   9.11475  5.65e-05</span></span>
+<span><span class="co">#&gt;        [2]     chr1       14316-14334      + |    MA0139.1   7.83607  9.71e-05</span></span>
+<span><span class="co">#&gt;        [3]     chr1       15439-15457      + |    MA0139.1   8.00000  9.08e-05</span></span>
+<span><span class="co">#&gt;        [4]     chr1       16603-16621      + |    MA0139.1   8.04918  8.89e-05</span></span>
+<span><span class="co">#&gt;        [5]     chr1       16651-16669      + |    MA0139.1  11.42620  1.97e-05</span></span>
+<span><span class="co">#&gt;        ...      ...               ...    ... .         ...       ...       ...</span></span>
+<span><span class="co">#&gt;   [887976]     chrY 57209918-57209936      - |    MA0139.1  11.42620  1.97e-05</span></span>
+<span><span class="co">#&gt;   [887977]     chrY 57209966-57209984      - |    MA0139.1   8.04918  8.89e-05</span></span>
+<span><span class="co">#&gt;   [887978]     chrY 57211133-57211151      - |    MA0139.1   8.00000  9.08e-05</span></span>
+<span><span class="co">#&gt;   [887979]     chrY 57212256-57212274      - |    MA0139.1   7.83607  9.71e-05</span></span>
+<span><span class="co">#&gt;   [887980]     chrY 57215146-57215164      - |    MA0139.1   9.11475  5.65e-05</span></span>
+<span><span class="co">#&gt;               qvalue            sequence</span></span>
+<span><span class="co">#&gt;            &lt;numeric&gt;         &lt;character&gt;</span></span>
+<span><span class="co">#&gt;        [1]     0.555 ctggcagctggggacactg</span></span>
+<span><span class="co">#&gt;        [2]     0.601 GGACCAACAGGGGCAGGAG</span></span>
+<span><span class="co">#&gt;        [3]     0.599 TAGCCTCCAGAGGCCTCAG</span></span>
+<span><span class="co">#&gt;        [4]     0.597 CCACCTGAAGGAGACGCGC</span></span>
+<span><span class="co">#&gt;        [5]     0.504 TGGCCTACAGGGGCCGCGG</span></span>
+<span><span class="co">#&gt;        ...       ...                 ...</span></span>
+<span><span class="co">#&gt;   [887976]     0.648 TGGCCTACAGGGGCCGCGG</span></span>
+<span><span class="co">#&gt;   [887977]     0.770 CCACCTGAAGGAGACGCGC</span></span>
+<span><span class="co">#&gt;   [887978]     0.770 TAGCCTCCAGAGGCCTCAG</span></span>
+<span><span class="co">#&gt;   [887979]     0.770 GGACCAACAGGGGCAGGAG</span></span>
+<span><span class="co">#&gt;   [887980]     0.726 CTGGCAGCTGGGGACACTG</span></span>
+<span><span class="co">#&gt;   -------</span></span>
+<span><span class="co">#&gt;   seqinfo: 24 sequences from hg38 genome</span></span></code></pre></div>
+<p>It is always advisable to sort GRanges objects and keep standard chromsomes:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">plyranges</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">CTCF_hg38_all</span> <span class="op">&lt;-</span> <span class="va">CTCF_hg38_all</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">keepStandardChromosomes</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">CTCF_hg38</span> <span class="op">&lt;-</span> <span class="va">CTCF_hg38</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">keepStandardChromosomes</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Note that the <a href="https://meme-suite.org/meme/doc/fimo.html" class="external-link">FIMO</a> tool detects CTCF binding sites using the 1e-4 p-value threshold by default (the more significant p-value corresponds to the more confidently detected CTCF motif). We found that this threshold may be too permissive. Using the <a href="https://screen.encodeproject.org/" class="external-link">ENCODE SCREEN</a> database as ground truth, we found 1e-6 as the optimal threshold providing approximately 80% true positive rate. However, less significant CTCF motifs may be cell type-specific or have weaker CTCF binding and therefore be missed by conventional peak callers. If cell type-specific CTCF binding is of interest, we recommend exploring less significant CTCF sites.</p>
+<p><img src="reference/figures/Figure_human_pvalues_threshold.png" width="100%"></p>
+<p>To filter the GRanges object and keep high-confidence CTCF sites, use:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check length before filtering</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Number of CTCF motifs at the default 1e-4 threshold:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">CTCF_hg38</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Number of CTCF motifs at the default 1e-4 threshold: 887980"</span></span>
+<span><span class="co"># Filter and check length after filtering</span></span>
+<span><span class="va">CTCF_hg38_filtered</span> <span class="op">&lt;-</span> <span class="va">CTCF_hg38</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pvalue</span> <span class="op">&lt;</span> <span class="fl">1e-6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Number of CTCF motifs at the 1e-6 threshold:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">CTCF_hg38_filtered</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Number of CTCF motifs at the 1e-6 threshold: 21671"</span></span>
+<span><span class="co"># Similarly, filter</span></span>
+<span><span class="va">CTCF_hg38_all_filtered</span> <span class="op">&lt;-</span> <span class="va">CTCF_hg38_all</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pvalue</span> <span class="op">&lt;</span> <span class="fl">1e-6</span><span class="op">)</span></span></code></pre></div>
+<p>Given some databases provide multiple CTCF PWMs, one CTCF site may be detected multiple times resulting in overlapping CTCF sites. For example, the proportion of overlapping CTCF sites in the <code>CTCF_hg38_all_filtered</code> object containing CTCF sites detected by three matrices nearly 40%:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Proportion of overlapping enrtries</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">findOverlaps</a></span><span class="op">(</span><span class="va">CTCF_hg38_all</span>, <span class="va">CTCF_hg38_all</span><span class="op">)</span></span>
+<span><span class="va">prop_overlap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">queryHits</span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">prop_overlap</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prop_overlap</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"1"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">CTCF_hg38_all</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.375093</span></span></code></pre></div>
+<p>The proportion of overlapping CTCF sites in the <code>CTCF_hg38_filtered</code> object containing CTCF sites detected by the <a href="https://jaspar.genereg.net/matrix/MA0139.1/" class="external-link">MA0139.1</a> matrix is less than 2.5%</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">findOverlaps</a></span><span class="op">(</span><span class="va">CTCF_hg38</span>, <span class="va">CTCF_hg38</span><span class="op">)</span></span>
+<span><span class="va">prop_overlap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">queryHits</span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">prop_overlap</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prop_overlap</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"1"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">CTCF_hg38</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.0233485</span></span></code></pre></div>
+<p>Reducing them (merging overlapping CTCF sites), combined with 1E-6 cutoff filtering, yields the number of CTCF sites comparable to previously reported.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Number of CTCF_hg38 motifs at the 1e-6 threshold AND reduced:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">CTCF_hg38_filtered</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/inter-range-methods.html" class="external-link">reduce</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Number of CTCF_hg38 motifs at the 1e-6 threshold AND reduced: 21652"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Number of CTCF_hg38_all motifs at the 1e-6 threshold AND reduced:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">CTCF_hg38_all_filtered</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/inter-range-methods.html" class="external-link">reduce</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Number of CTCF_hg38_all motifs at the 1e-6 threshold AND reduced: 63572"</span></span></code></pre></div>
+<p>However, regulatory elements with CTCF proteins co-occupying adjacent/overlapping CTCF binding motifs were shown to be functionally and structurally different from those with single CTCF motifs. We provide non-reduced CTCF data and advise considering overlap of CTCF sites depending on the study’s goal.</p>
 </div>
 </div>
+<div class="section level1">
+<h1 id="liftover-of-ctcf-coordinates">liftOver of CTCF coordinates<a class="anchor" aria-label="anchor" href="#liftover-of-ctcf-coordinates"></a>
+</h1>
+<p>As genome assemblies for model organisms continue to improve, CTCF sites for previous genome assemblies become obsolete. Typically, the actual genome sequence changes little, leading to changes in genomic coordinates. The <a href="https://genome.ucsc.edu/cgi-bin/hgLiftOver" class="external-link">liftOver</a> method allows for conversion of genomic coordinates between genome assemblies.</p>
+<p>Some carefully curated CTCF sites are available only for older genome assemblies. Examples include the data from <a href="https://insulatordb.uthsc.edu/" class="external-link">CTCFBSDB</a>, available for hg18 and mm8 genome assemblies.</p>
+<p>To investigate whether liftOver of CTCF sites from older genome assemblies is a viable option, we tested for overlap between CTCF sites directly detected in specific genome assemblies with those lifted over. We detected CTCF sites using the <a href="https://jaspar.genereg.net/matrix/MA0139.1/" class="external-link">MA0139.1</a> PWM from JASPAR 2022 database in hg18, hg19, hg38, and T2T genome assemblies and converted their genomic coordinates using the corresponding liftOver chains (<a href="https://github.com/dozmorovlab/CTCF.dev/blob/main/scripts/download_liftOver.sh" class="external-link">download_liftOver.sh</a> and <a href="https://github.com/dozmorovlab/CTCF.dev/blob/main/scripts/convert_liftOver.sh" class="external-link">convert_liftOver.sh</a> scripts). We observed high Jaccard overlap among CTCF sites detected in the original genome assemblies or lifted over.</p>
+<p><strong>Jaccard overlaps among CTCF binding sites detected in the original and liftOver human genome assemblies.</strong> CTCF sites were detected using JASPAR 2022 MA0139.1 PWM. The correlogram was clustered using Euclidean distance and Ward.D clustering . White-red gradient indicate low-to-high Jaccard overlaps. Jaccard values are shown in the corresponding cells.</p>
+<p><img src="reference/figures/Figure_liftOverJaccard.png" width="100%"></p>
+<p>Our results suggest that liftOver is a viable alternative to obtain CTCF genomic annotations for different genome assemblies. We provide <a href="https://insulatordb.uthsc.edu/" class="external-link">CTCFBSDB</a> data converted to hg19 and hg38 genome assemblies.</p>
+</div>
+<div class="section level1">
+<h1 id="ctcf-position-weight-matrices">CTCF Position Weight Matrices<a class="anchor" aria-label="anchor" href="#ctcf-position-weight-matrices"></a>
+</h1>
+<p><strong>CTCF PWM information.</strong> “Motif” - individual motif IDs or the total number of motifs per database; “Length” - motif length of the range of lengths; “URL” - direct links to motif pages. Jaspar, Hocomoco, Jolma 2013 PWMs were downloaded from the <a href="https://meme-suite.org/meme/doc/download.html" class="external-link">MEME database</a>.</p>
+<table class="table">
+<colgroup>
+<col width="35%">
+<col width="8%">
+<col width="55%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Motif</th>
+<th align="left">Length..bp.</th>
+<th align="left">URL</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Jaspar2022</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">MA0139.1</td>
+<td align="left">19</td>
+<td align="left"><a href="https://jaspar2022.genereg.net/matrix/MA0139.1" class="external-link uri">https://jaspar2022.genereg.net/matrix/MA0139.1</a></td>
+</tr>
+<tr class="odd">
+<td align="left">MA1929.1</td>
+<td align="left">34</td>
+<td align="left"><a href="http://jaspar2022.genereg.net/matrix/MA1929.1" class="external-link uri">http://jaspar2022.genereg.net/matrix/MA1929.1</a></td>
+</tr>
+<tr class="even">
+<td align="left">MA1930.1</td>
+<td align="left">35</td>
+<td align="left"><a href="http://jaspar2022.genereg.net/matrix/MA1930.1" class="external-link uri">http://jaspar2022.genereg.net/matrix/MA1930.1</a></td>
+</tr>
+<tr class="odd">
+<td align="left">HOCOMOCO v11</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">CTCF_HUMAN.H11MO.0.A</td>
+<td align="left">19</td>
+<td align="left"><a href="http://hocomoco.autosome.ru/motif/CTCF_HUMAN.H11MO.0.A" class="external-link uri">http://hocomoco.autosome.ru/motif/CTCF_HUMAN.H11MO.0.A</a></td>
+</tr>
+<tr class="odd">
+<td align="left">CTCF_MOUSE.H11MO.0.A</td>
+<td align="left">20</td>
+<td align="left"><a href="http://hocomoco.autosome.ru/motif/CTCF_MOUSE.H11MO.0.A" class="external-link uri">http://hocomoco.autosome.ru/motif/CTCF_MOUSE.H11MO.0.A</a></td>
+</tr>
+<tr class="even">
+<td align="left">SwissRegulon</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">CTCF.p2</td>
+<td align="left">20</td>
+<td align="left"><a href="https://swissregulon.unibas.ch/wm/?wm=CTCF.p2&amp;org=hg18" class="external-link uri">https://swissregulon.unibas.ch/wm/?wm=CTCF.p2&amp;org=hg18</a></td>
+</tr>
+<tr class="even">
+<td align="left">Jolma 2013</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">CTCF_full</td>
+<td align="left">17</td>
+<td align="left"><a href="http://floresta.eead.csic.es/footprintdb/index.php?db=HumanTF:1.0&amp;motif=CTCF_full" class="external-link uri">http://floresta.eead.csic.es/footprintdb/index.php?db=HumanTF:1.0&amp;motif=CTCF_full</a></td>
+</tr>
+<tr class="even">
+<td align="left">CTCFBSDB</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">EMBL_M1, EMBL_M2, MIT_LM2, MIT_LM7, MIT_LM23, REN_20</td>
+<td align="left">9-20</td>
+<td align="left"><a href="https://insulatordb.uthsc.edu/download/CTCFBSDB_PWM.mat" class="external-link uri">https://insulatordb.uthsc.edu/download/CTCFBSDB_PWM.mat</a></td>
+</tr>
+<tr class="even">
+<td align="left">CIS-BP</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">83 CTCF (Homo sapiens) C2H2 ZF</td>
+<td align="left">11-21</td>
+<td align="left"><a href="http://cisbp.ccbr.utoronto.ca/TFreport.php?searchTF=T094831_2.00" class="external-link uri">http://cisbp.ccbr.utoronto.ca/TFreport.php?searchTF=T094831_2.00</a></td>
+</tr>
+<tr class="even">
+<td align="left">2 Ctcf (Mus musculus) C2H2 ZF</td>
+<td align="left">15, 20</td>
+<td align="left"><a href="http://cisbp.ccbr.utoronto.ca/TFreport.php?searchTF=T100985_2.00" class="external-link uri">http://cisbp.ccbr.utoronto.ca/TFreport.php?searchTF=T100985_2.00</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>CTCF motif logos.</strong> PWMs from (A) MEME, (B) CTCFBSDB, (C) CIS-BP human, and (D) CIS-BP mouse databases. Clustering and alignment of motifs was performed using the <code>r</code>BiocStyle::Biocpkg(“motifStack”)` R package.</p>
+<p><img src="reference/figures/Supplementary_Figure_1.png" width="100%"></p>
+<p>See <a href="inst/scripts/make-data.R">inst/scripts/make-data.R</a> how the CTCF GRanges objects were created.</p>
+</div>
+<div class="section level1">
+<h1 id="ctcf-predicted-and-experimental-data">CTCF predicted and experimental data<a class="anchor" aria-label="anchor" href="#ctcf-predicted-and-experimental-data"></a>
+</h1>
+<p><strong>Predefined CTCF binding data.</strong> “Database” - source of data; “Number” - number of binding sites; “Assembly” - genome assembly; “URL” - direct link to data download.</p>
+<table class="table">
+<colgroup>
+<col width="28%">
+<col width="6%">
+<col width="8%">
+<col width="56%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Database</th>
+<th align="right">Number</th>
+<th align="left">Assembly</th>
+<th align="left">URL</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">CTCFBSDB 2.0</td>
+<td align="right">NA</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Predicted human CTCF binding sites</td>
+<td align="right">13401</td>
+<td align="left">hg18</td>
+<td align="left"><a href="https://insulatordb.uthsc.edu/download/allcomp.txt.gz" class="external-link uri">https://insulatordb.uthsc.edu/download/allcomp.txt.gz</a></td>
+</tr>
+<tr class="odd">
+<td align="left">Predicted mouse CTCF binding sites</td>
+<td align="right">5504</td>
+<td align="left">mm8</td>
+<td align="left"><a href="https://insulatordb.uthsc.edu/download/allcomp.txt.gz" class="external-link uri">https://insulatordb.uthsc.edu/download/allcomp.txt.gz</a></td>
+</tr>
+<tr class="even">
+<td align="left">SCREEN ENCODE</td>
+<td align="right">NA</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Human CTCF-bound cCREs</td>
+<td align="right">450641</td>
+<td align="left">hg38</td>
+<td align="left"><a href="https://api.wenglab.org/screen_v13/fdownloads/cCREs/GRCh38-CTCF.bed" class="external-link uri">https://api.wenglab.org/screen_v13/fdownloads/cCREs/GRCh38-CTCF.bed</a></td>
+</tr>
+<tr class="even">
+<td align="left">Mouse CTCF-bound cCREs</td>
+<td align="right">82777</td>
+<td align="left">mm10</td>
+<td align="left"><a href="https://api.wenglab.org/screen_v13/fdownloads/cCREs/mm10-CTCF.bed" class="external-link uri">https://api.wenglab.org/screen_v13/fdownloads/cCREs/mm10-CTCF.bed</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level1">
+<h1 id="all-granges-objects-included-in-the-package">All GRanges objects included in the package<a class="anchor" aria-label="anchor" href="#all-granges-objects-included-in-the-package"></a>
+</h1>
+<p><strong>Summary of CTCF binding data provided in the package.</strong> CTCF sites for each genome assembly and PWM combination were detected using FIMO. “ID” - object names formatted as <code>&lt;assembly&gt;.&lt;database name&gt;</code>; “Assembly” - genome assembly, T2T - telomere to telomere (GCA_009914755.4) genome assembly; “All (p-value threshold Xe-Y)” - the total number of CTCF binding sites in the corresponding BED file at the Xe-Y threshold; “Non-overlapping (p-value threshold Xe-Y)” - number of non-overlapping CTCF binding sites (overlapping regions are merged) at the Xe-Y threshold.</p>
+<table class="table">
+<colgroup>
+<col width="16%">
+<col width="28%">
+<col width="2%">
+<col width="3%">
+<col width="2%">
+<col width="5%">
+<col width="8%">
+<col width="11%">
+<col width="8%">
+<col width="11%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">ID</th>
+<th align="left">Description</th>
+<th align="left">Genome</th>
+<th align="left">Species</th>
+<th align="right">Taxonomy</th>
+<th align="left">Data.provider</th>
+<th align="left">All..p.value.threshold.1e.4.</th>
+<th align="left">Non.overlapping..p.value.threshold.1e.4.</th>
+<th align="left">All..p.value.threshold.1e.6.</th>
+<th align="left">Non.overlapping..p.value.threshold.1e.6.</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">T2T.CIS_BP_2.00_Homo_sapiens.RData</td>
+<td align="left">T2T CTCF motifs detected using human PWM matrices from <a href="http://cisbp.ccbr.utoronto.ca/" class="external-link uri">http://cisbp.ccbr.utoronto.ca/</a>, by FIMO</td>
+<td align="left">T2T</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CIS-BP</td>
+<td align="left">85,004,288</td>
+<td align="left">11,610,275</td>
+<td align="left">1,642,859</td>
+<td align="left">308,511</td>
+</tr>
+<tr class="even">
+<td align="left">T2T.CTCFBSDB_PWM.RData</td>
+<td align="left">T2T CTCF motifs detected using PWM matrices from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>, by FIMO</td>
+<td align="left">T2T</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,385,530</td>
+<td align="left">3,452,150</td>
+<td align="left">98,088</td>
+<td align="left">61,030</td>
+</tr>
+<tr class="odd">
+<td align="left">T2T.HOCOMOCOv11_core_HUMAN_mono_meme_format.RData</td>
+<td align="left">T2T CTCF motifs detected using human PWM matrices from <a href="https://hocomoco11.autosome.org/" class="external-link uri">https://hocomoco11.autosome.org/</a>, by FIMO</td>
+<td align="left">T2T</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">HOCOMOCO v11</td>
+<td align="left">927,477</td>
+<td align="left">909,247</td>
+<td align="left">21,491</td>
+<td align="left">21,450</td>
+</tr>
+<tr class="even">
+<td align="left">T2T.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData</td>
+<td align="left">T2T CTCF motifs detected using human PWM matrices from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">T2T</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">3,196,774</td>
+<td align="left">2,538,458</td>
+<td align="left">75,126</td>
+<td align="left">64,767</td>
+</tr>
+<tr class="odd">
+<td align="left">T2T.Jolma2013.RData</td>
+<td align="left">T2T CTCF motifs detected using PWM matrices from <a href="DOI:10.1016/j.cell.2012.12.009" class="uri">DOI:10.1016/j.cell.2012.12.009</a>, by FIMO</td>
+<td align="left">T2T</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">Jolma 2013</td>
+<td align="left">342,765</td>
+<td align="left">341,669</td>
+<td align="left">6,857</td>
+<td align="left">6,857</td>
+</tr>
+<tr class="even">
+<td align="left">T2T.MA0139.1.RData</td>
+<td align="left">T2T CTCF motifs detected using MA0139.1 PWM matrix from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">T2T</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">916,829</td>
+<td align="left">905,231</td>
+<td align="left">22,149</td>
+<td align="left">22,131</td>
+</tr>
+<tr class="odd">
+<td align="left">T2T.SwissRegulon_human_and_mouse.RData</td>
+<td align="left">T2T CTCF motifs detected using PWM matrices from <a href="https://swissregulon.unibas.ch/sr/" class="external-link uri">https://swissregulon.unibas.ch/sr/</a>, by FIMO</td>
+<td align="left">T2T</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">SwissRegulon</td>
+<td align="left">1,106,234</td>
+<td align="left">1,094,142</td>
+<td align="left">23,050</td>
+<td align="left">23,006</td>
+</tr>
+<tr class="even">
+<td align="left">hg38.CIS_BP_2.00_Homo_sapiens.RData</td>
+<td align="left">hg38 CTCF motifs detected using human PWM matrices from <a href="http://cisbp.ccbr.utoronto.ca/" class="external-link uri">http://cisbp.ccbr.utoronto.ca/</a>, by FIMO</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CIS-BP</td>
+<td align="left">82,804,664</td>
+<td align="left">11,502,445</td>
+<td align="left">1,612,042</td>
+<td align="left">303,446</td>
+</tr>
+<tr class="odd">
+<td align="left">hg38.CTCFBSDB.CTCF_predicted_human.RData</td>
+<td align="left">hg38 CTCF predicted motifs from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>
+</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,212,674</td>
+<td align="left">3,343,301</td>
+<td align="left">97,491</td>
+<td align="left">60,648</td>
+</tr>
+<tr class="even">
+<td align="left">hg38.CTCFBSDB_PWM.RData</td>
+<td align="left">hg38 CTCF motifs detected using PWM matrices from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>, by FIMO</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">13,357</td>
+<td align="left">13,278</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">hg38.HOCOMOCOv11_core_HUMAN_mono_meme_format.RData</td>
+<td align="left">hg38 CTCF motifs detected using human PWM matrices from <a href="https://hocomoco11.autosome.org/" class="external-link uri">https://hocomoco11.autosome.org/</a>, by FIMO</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">HOCOMOCO v11</td>
+<td align="left">891,816</td>
+<td align="left">875,038</td>
+<td align="left">21,020</td>
+<td align="left">20,975</td>
+</tr>
+<tr class="even">
+<td align="left">hg38.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData</td>
+<td align="left">hg38 CTCF motifs detected using human PWM matrices from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">3,093,041</td>
+<td align="left">2,456,234</td>
+<td align="left">73,545</td>
+<td align="left">63,572</td>
+</tr>
+<tr class="odd">
+<td align="left">hg38.Jolma2013.RData</td>
+<td align="left">hg38 CTCF motifs detected using PWM matrices from <a href="DOI:10.1016/j.cell.2012.12.009" class="uri">DOI:10.1016/j.cell.2012.12.009</a>, by FIMO</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">Jolma 2013</td>
+<td align="left">330,892</td>
+<td align="left">329,834</td>
+<td align="left">6,823</td>
+<td align="left">6,823</td>
+</tr>
+<tr class="even">
+<td align="left">hg38.MA0139.1.RData</td>
+<td align="left">hg38 CTCF motifs detected using MA0139.1 PWM matrix from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">887,980</td>
+<td align="left">876,938</td>
+<td align="left">21,671</td>
+<td align="left">21,652</td>
+</tr>
+<tr class="odd">
+<td align="left">hg38.SCREEN.GRCh38_CTCF.RData</td>
+<td align="left">hg38 CTCF-bound human cis-regulatory elements from <a href="https://screen.encodeproject.org/" class="external-link uri">https://screen.encodeproject.org/</a>
+</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">ENCODE SCREEN v3</td>
+<td align="left">450,641</td>
+<td align="left">444,379</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">hg38.SwissRegulon_human_and_mouse.RData</td>
+<td align="left">hg38 CTCF motifs detected using PWM matrices from <a href="https://swissregulon.unibas.ch/sr/" class="external-link uri">https://swissregulon.unibas.ch/sr/</a>, by FIMO</td>
+<td align="left">hg38</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">SwissRegulon</td>
+<td align="left">1,079,055</td>
+<td align="left">1,067,050</td>
+<td align="left">22,569</td>
+<td align="left">22,521</td>
+</tr>
+<tr class="odd">
+<td align="left">hg19.CIS_BP_2.00_Homo_sapiens.RData</td>
+<td align="left">hg19 CTCF motifs detected using human PWM matrices from <a href="http://cisbp.ccbr.utoronto.ca/" class="external-link uri">http://cisbp.ccbr.utoronto.ca/</a>, by FIMO</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CIS-BP</td>
+<td align="left">81,569,702</td>
+<td align="left">11,355,221</td>
+<td align="left">1,595,787</td>
+<td align="left">298,489</td>
+</tr>
+<tr class="even">
+<td align="left">hg19.CTCFBSDB.CTCF_predicted_human.RData</td>
+<td align="left">hg19 CTCF motifs detected using PWM matrices from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>, by FIMO</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,118,501</td>
+<td align="left">3,294,516</td>
+<td align="left">93,692</td>
+<td align="left">57,137</td>
+</tr>
+<tr class="odd">
+<td align="left">hg19.CTCFBSDB_PWM.RData</td>
+<td align="left">hg19 CTCF predicted motifs from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>
+</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">13,355</td>
+<td align="left">13,294</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">hg19.HOCOMOCOv11_core_HUMAN_mono_meme_format.RData</td>
+<td align="left">hg19 CTCF motifs detected using human PWM matrices from <a href="https://hocomoco11.autosome.org/" class="external-link uri">https://hocomoco11.autosome.org/</a>, by FIMO</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">HOCOMOCO v11</td>
+<td align="left">876,822</td>
+<td align="left">860,212</td>
+<td align="left">20,853</td>
+<td align="left">20,811</td>
+</tr>
+<tr class="odd">
+<td align="left">hg19.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData</td>
+<td align="left">hg19 CTCF motifs detected using human PWM matrices from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">3,035,951</td>
+<td align="left">2,414,604</td>
+<td align="left">71,825</td>
+<td align="left">61,940</td>
+</tr>
+<tr class="even">
+<td align="left">hg19.Jolma2013.RData</td>
+<td align="left">hg19 CTCF motifs detected using PWM matrices from <a href="DOI:10.1016/j.cell.2012.12.009" class="uri">DOI:10.1016/j.cell.2012.12.009</a>, by FIMO</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">Jolma 2013</td>
+<td align="left">315,914</td>
+<td align="left">314,858</td>
+<td align="left">6,734</td>
+<td align="left">6,734</td>
+</tr>
+<tr class="odd">
+<td align="left">hg19.MA0139.1.RData</td>
+<td align="left">hg19 CTCF motifs detected using MA0139.1 PWM matrix from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">871,136</td>
+<td align="left">860,252</td>
+<td align="left">21,511</td>
+<td align="left">21,491</td>
+</tr>
+<tr class="even">
+<td align="left">hg19.SwissRegulon_human_and_mouse.RData</td>
+<td align="left">hg19 CTCF motifs detected using PWM matrices from <a href="https://swissregulon.unibas.ch/sr/" class="external-link uri">https://swissregulon.unibas.ch/sr/</a>, by FIMO</td>
+<td align="left">hg19</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">SwissRegulon</td>
+<td align="left">1,061,972</td>
+<td align="left">1,050,085</td>
+<td align="left">22,325</td>
+<td align="left">22,282</td>
+</tr>
+<tr class="odd">
+<td align="left">hg18.CTCFBSDB.CTCF_predicted_human.RData</td>
+<td align="left">hg18 CTCF predicted motifs from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>
+</td>
+<td align="left">hg18</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">13,401</td>
+<td align="left">13,343</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">hg18.MA0139.1.RData</td>
+<td align="left">hg18 CTCF motifs detected using MA0139.1 PWM matrix from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">hg18</td>
+<td align="left">Homo sapiens</td>
+<td align="right">9606</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">869,463</td>
+<td align="left">858,603</td>
+<td align="left">21,436</td>
+<td align="left">21,416</td>
+</tr>
+<tr class="odd">
+<td align="left">mm39.CIS_BP_2.00_Mus_musculus.RData</td>
+<td align="left">mm39 CTCF motifs detected using mouse PWM matrices from <a href="http://cisbp.ccbr.utoronto.ca/" class="external-link uri">http://cisbp.ccbr.utoronto.ca/</a>, by FIMO</td>
+<td align="left">mm39</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CIS-BP</td>
+<td align="left">1,811,582</td>
+<td align="left">1,308,209</td>
+<td align="left">101,066</td>
+<td align="left">80,637</td>
+</tr>
+<tr class="even">
+<td align="left">mm39.CTCFBSDB_PWM.RData</td>
+<td align="left">mm39 CTCF predicted motifs from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>
+</td>
+<td align="left">mm39</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,476,211</td>
+<td align="left">3,237,788</td>
+<td align="left">164,967</td>
+<td align="left">104,883</td>
+</tr>
+<tr class="odd">
+<td align="left">mm39.HOCOMOCOv11_core_MOUSE_mono_meme_format.RData</td>
+<td align="left">mm39 CTCF motifs detected using mouse PWM matrices from <a href="https://hocomoco11.autosome.org/" class="external-link uri">https://hocomoco11.autosome.org/</a>, by FIMO</td>
+<td align="left">mm39</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">HOCOMOCO v11</td>
+<td align="left">740,710</td>
+<td align="left">726,641</td>
+<td align="left">27,620</td>
+<td align="left">27,582</td>
+</tr>
+<tr class="even">
+<td align="left">mm39.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData</td>
+<td align="left">mm39 CTCF motifs detected using mouse PWM matrices from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">mm39</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">2,940,147</td>
+<td align="left">2,280,509</td>
+<td align="left">109,427</td>
+<td align="left">90,585</td>
+</tr>
+<tr class="odd">
+<td align="left">mm39.Jolma2013.RData</td>
+<td align="left">mm39 CTCF motifs detected using PWM matrices from <a href="DOI:10.1016/j.cell.2012.12.009" class="uri">DOI:10.1016/j.cell.2012.12.009</a>, by FIMO</td>
+<td align="left">mm39</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">Jolma 2013</td>
+<td align="left">423,521</td>
+<td align="left">422,552</td>
+<td align="left">12,800</td>
+<td align="left">12,797</td>
+</tr>
+<tr class="even">
+<td align="left">mm39.MA0139.1.RData</td>
+<td align="left">mm39 CTCF motifs detected using MA0139.1 PWM matrix from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">mm39</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">962,332</td>
+<td align="left">949,270</td>
+<td align="left">32,210</td>
+<td align="left">32,199</td>
+</tr>
+<tr class="odd">
+<td align="left">mm39.SwissRegulon_human_and_mouse.RData</td>
+<td align="left">mm39 CTCF motifs detected using PWM matrices from <a href="https://swissregulon.unibas.ch/sr/" class="external-link uri">https://swissregulon.unibas.ch/sr/</a>, by FIMO</td>
+<td align="left">mm39</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">SwissRegulon</td>
+<td align="left">1,094,643</td>
+<td align="left">1,080,229</td>
+<td align="left">40,549</td>
+<td align="left">40,523</td>
+</tr>
+<tr class="even">
+<td align="left">mm10.CIS_BP_2.00_Mus_musculus.RData</td>
+<td align="left">mm10 CTCF motifs detected using mouse PWM matrices from <a href="http://cisbp.ccbr.utoronto.ca/" class="external-link uri">http://cisbp.ccbr.utoronto.ca/</a>, by FIMO</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CIS-BP</td>
+<td align="left">1,810,213</td>
+<td align="left">1,307,193</td>
+<td align="left">101,011</td>
+<td align="left">80,592</td>
+</tr>
+<tr class="odd">
+<td align="left">mm10.CTCFBSDB.CTCF_predicted_mouse.RData</td>
+<td align="left">mm10 CTCF motifs detected using PWM matrices from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>, by FIMO</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,472,184</td>
+<td align="left">3,235,312</td>
+<td align="left">164,855</td>
+<td align="left">104,827</td>
+</tr>
+<tr class="even">
+<td align="left">mm10.CTCFBSDB_PWM.RData</td>
+<td align="left">mm10 CTCF predicted motifs from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>
+</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,502</td>
+<td align="left">5,491</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">mm10.HOCOMOCOv11_core_MOUSE_mono_meme_format.RData</td>
+<td align="left">mm10 CTCF motifs detected using mouse PWM matrices from <a href="https://hocomoco11.autosome.org/" class="external-link uri">https://hocomoco11.autosome.org/</a>, by FIMO</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">HOCOMOCO v11</td>
+<td align="left">740,100</td>
+<td align="left">726,052</td>
+<td align="left">27,604</td>
+<td align="left">27,566</td>
+</tr>
+<tr class="even">
+<td align="left">mm10.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData</td>
+<td align="left">mm10 CTCF motifs detected using mouse PWM matrices from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">2,938,085</td>
+<td align="left">2,278,849</td>
+<td align="left">109,363</td>
+<td align="left">90,532</td>
+</tr>
+<tr class="odd">
+<td align="left">mm10.Jolma2013.RData</td>
+<td align="left">mm10 CTCF motifs detected using PWM matrices from <a href="DOI:10.1016/j.cell.2012.12.009" class="uri">DOI:10.1016/j.cell.2012.12.009</a>, by FIMO</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">Jolma 2013</td>
+<td align="left">423,194</td>
+<td align="left">422,225</td>
+<td align="left">12,789</td>
+<td align="left">12,786</td>
+</tr>
+<tr class="even">
+<td align="left">mm10.MA0139.1.RData</td>
+<td align="left">mm10 CTCF motifs detected using MA0139.1 PWM matrix from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">961,635</td>
+<td align="left">948,581</td>
+<td align="left">32,188</td>
+<td align="left">32,177</td>
+</tr>
+<tr class="odd">
+<td align="left">mm10.SCREEN.mm10_CTCF.RData</td>
+<td align="left">mm10 CTCF-bound mouse cis-regulatory elements from <a href="https://screen.encodeproject.org/" class="external-link uri">https://screen.encodeproject.org/</a>
+</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">ENCODE SCREEN v3</td>
+<td align="left">82,777</td>
+<td align="left">82,100</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">mm10.SwissRegulon_human_and_mouse.RData</td>
+<td align="left">mm10 CTCF motifs detected using PWM matrices from <a href="https://swissregulon.unibas.ch/sr/" class="external-link uri">https://swissregulon.unibas.ch/sr/</a>, by FIMO</td>
+<td align="left">mm10</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">SwissRegulon</td>
+<td align="left">1,093,870</td>
+<td align="left">1,079,467</td>
+<td align="left">40,525</td>
+<td align="left">40,499</td>
+</tr>
+<tr class="odd">
+<td align="left">mm9.CIS_BP_2.00_Mus_musculus.RData</td>
+<td align="left">mm9 CTCF motifs detected using mouse PWM matrices from <a href="http://cisbp.ccbr.utoronto.ca/" class="external-link uri">http://cisbp.ccbr.utoronto.ca/</a>, by FIMO</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CIS-BP</td>
+<td align="left">1,770,520</td>
+<td align="left">1,278,081</td>
+<td align="left">99,197</td>
+<td align="left">79,218</td>
+</tr>
+<tr class="even">
+<td align="left">mm9.CTCFBSDB.CTCF_predicted_mouse.RData</td>
+<td align="left">mm9 CTCF motifs detected using PWM matrices from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>, by FIMO</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,335,475</td>
+<td align="left">3,150,407</td>
+<td align="left">161,014</td>
+<td align="left">102,880</td>
+</tr>
+<tr class="odd">
+<td align="left">mm9.CTCFBSDB_PWM.RData</td>
+<td align="left">mm9 CTCF predicted motifs from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>
+</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,502</td>
+<td align="left">5,491</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">mm9.HOCOMOCOv11_core_MOUSE_mono_meme_format.RData</td>
+<td align="left">mm9 CTCF motifs detected using mouse PWM matrices from <a href="https://hocomoco11.autosome.org/" class="external-link uri">https://hocomoco11.autosome.org/</a>, by FIMO</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">HOCOMOCO v11</td>
+<td align="left">725,199</td>
+<td align="left">711,236</td>
+<td align="left">27,103</td>
+<td align="left">27,065</td>
+</tr>
+<tr class="odd">
+<td align="left">mm9.JASPAR2022_CORE_vertebrates_non_redundant_v2.RData</td>
+<td align="left">mm9 CTCF motifs detected using mouse PWM matrices from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">2,879,784</td>
+<td align="left">2,230,170</td>
+<td align="left">107,506</td>
+<td align="left">89,172</td>
+</tr>
+<tr class="even">
+<td align="left">mm9.Jolma2013.RData</td>
+<td align="left">mm9 CTCF motifs detected using PWM matrices from <a href="DOI:10.1016/j.cell.2012.12.009" class="uri">DOI:10.1016/j.cell.2012.12.009</a>, by FIMO</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">Jolma 2013</td>
+<td align="left">411,345</td>
+<td align="left">410,398</td>
+<td align="left">12,309</td>
+<td align="left">12,306</td>
+</tr>
+<tr class="odd">
+<td align="left">mm9.MA0139.1.RData</td>
+<td align="left">mm9 CTCF motifs detected using MA0139.1 PWM matrix from <a href="https://jaspar.genereg.net/" class="external-link uri">https://jaspar.genereg.net/</a>, by FIMO</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">JASPAR 2022</td>
+<td align="left">938,919</td>
+<td align="left">925,939</td>
+<td align="left">31,446</td>
+<td align="left">31,435</td>
+</tr>
+<tr class="even">
+<td align="left">mm9.SwissRegulon_human_and_mouse.RData</td>
+<td align="left">mm9 CTCF motifs detected using PWM matrices from <a href="https://swissregulon.unibas.ch/sr/" class="external-link uri">https://swissregulon.unibas.ch/sr/</a>, by FIMO</td>
+<td align="left">mm9</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">SwissRegulon</td>
+<td align="left">1,066,676</td>
+<td align="left">1,052,374</td>
+<td align="left">39,510</td>
+<td align="left">39,484</td>
+</tr>
+<tr class="odd">
+<td align="left">mm8.CTCFBSDB.CTCF_predicted_mouse.RData</td>
+<td align="left">mm8 CTCF predicted motifs from <a href="https://insulatordb.uthsc.edu/" class="external-link uri">https://insulatordb.uthsc.edu/</a>
+</td>
+<td align="left">mm8</td>
+<td align="left">Mus musculus</td>
+<td align="right">10090</td>
+<td align="left">CTCFBSDB 2.0</td>
+<td align="left">5,504</td>
+<td align="left">5,493</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+</tbody>
+</table>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>Below is the citation output from using <code>citation('CTCF')</code> in R. Please run this yourself to check for any updates on how to cite <strong>CTCF</strong>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"CTCF"</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; To cite package 'CTCF' in publications use:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Dozmorov MG, Davis E, Mu W, Lee S, Triche T, Phanstiel D, Love M</span></span>
+<span><span class="co">#&gt;   (2022). _CTCF_. https://github.com/mdozmorov/CTCF/CTCF - R package</span></span>
+<span><span class="co">#&gt;   version 0.99.6, &lt;https://github.com/mdozmorov/CTCF&gt;.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   @Manual{,</span></span>
+<span><span class="co">#&gt;     title = {CTCF},</span></span>
+<span><span class="co">#&gt;     author = {Mikhail G. Dozmorov and Eric Davis and Wancen Mu and Stuart Lee and Tim Triche and Douglas Phanstiel and Michael Love},</span></span>
+<span><span class="co">#&gt;     year = {2022},</span></span>
+<span><span class="co">#&gt;     url = {https://github.com/mdozmorov/CTCF},</span></span>
+<span><span class="co">#&gt;     note = {https://github.com/mdozmorov/CTCF/CTCF - R package version 0.99.6},</span></span>
+<span><span class="co">#&gt;   }</span></span></code></pre></div>
+<p>Please note that the <em><a href="https://bioconductor.org/packages/3.16/BiocCheck" class="external-link">BiocCheck</a></em> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
+</div>
+<div class="section level2">
+<h2 id="development-tools">Development tools<a class="anchor" aria-label="anchor" href="#development-tools"></a>
+</h2>
+<ul>
+<li>Continuous code testing is possible thanks to <a href="https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/" class="external-link">GitHub actions</a> through <em><a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a></em>, <em><a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a></em>, and <em><a href="https://CRAN.R-project.org/package=rcmdcheck" class="external-link">rcmdcheck</a></em> customized to use <a href="https://www.bioconductor.org/help/docker/" class="external-link">Bioconductor’s docker containers</a> and <em><a href="https://bioconductor.org/packages/3.16/BiocCheck" class="external-link">BiocCheck</a></em>.</li>
+<li>Code coverage assessment is possible thanks to <a href="https://codecov.io/gh" class="external-link">codecov</a> and <em><a href="https://CRAN.R-project.org/package=covr" class="external-link">covr</a></em>.</li>
+<li>The <a href="http://mdozmorov.github.io/CTCF" class="external-link">documentation website</a> is automatically updated thanks to <em><a href="https://CRAN.R-project.org/package=pkgdown" class="external-link">pkgdown</a></em>.</li>
+<li>The code is styled automatically thanks to <em><a href="https://CRAN.R-project.org/package=styler" class="external-link">styler</a></em>.</li>
+<li>The documentation is formatted thanks to <em><a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a></em> and <em><a href="https://CRAN.R-project.org/package=roxygen2" class="external-link">roxygen2</a></em>.</li>
+</ul>
+<p>For more details, check the <code>dev</code> directory.</p>
+<p>This package was developed using <em><a href="https://bioconductor.org/packages/3.16/biocthis" class="external-link">biocthis</a></em>.</p>
+</div>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
+<p>Please note that the CTCF project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</div>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -559,7 +1237,7 @@ Please note that the CTCF project is released with a [Contributor Code of Conduc
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer>
